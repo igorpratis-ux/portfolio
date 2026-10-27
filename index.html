@@ -3065,7 +3065,9 @@ __animRAF(frame,svg);
   document.querySelectorAll('[data-campus]').forEach(function(s){window.mountCampus(s)});
   document.querySelectorAll('[data-serra]').forEach(function(s){window.mountSerra(s)});
   if(window.__canvasify&&window.Path2D&&window.DOMMatrix) document.querySelectorAll('.tile svg.anim').forEach(function(s){window.__canvasify(s)});
-  if(window.__layerify&&window.DOMMatrix) document.querySelectorAll('.tile svg.anim').forEach(function(s){window.__layerify(s)});
+  // celular/tablet: vetor puro (leve na memória e nítido no zoom); computador: camadas (mais rápido em placas de vídeo fracas)
+  var touch=window.matchMedia&&matchMedia('(pointer:coarse)').matches;
+  if(!touch&&window.__layerify&&window.DOMMatrix) document.querySelectorAll('.tile svg.anim').forEach(function(s){window.__layerify(s)});
   // 1º clique mostra o nome; 2º clique no mesmo quadrado abre o projeto
   var tiles=[].slice.call(document.querySelectorAll('.tile'));
   tiles.forEach(function(el){
